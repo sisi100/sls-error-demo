@@ -1,0 +1,14 @@
+service: demo-app-01
+
+provider:
+  name: aws
+  runtime: python3.7
+  region: ap-northeast-1
+
+functions:
+  XXXXX:
+    handler: XXXXX.yyyyyy
+    events:
+      - s3:
+        bucket: xxxxxxxxx-20200411
+        event: s3:ObjectCreated:*
