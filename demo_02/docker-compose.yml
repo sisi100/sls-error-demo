@@ -1,0 +1,10 @@
+version: '3'
+services:
+  sls:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile_sls
+    volumes:
+      - .:/opt/app
+    env_file:
+      - .env.aws-credentials

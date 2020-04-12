@@ -1,0 +1,15 @@
+service: demo-app-02
+
+provider:
+  name: aws
+  runtime: python3.7
+  region: ap-northeast-1
+  stage: ${opt:zzzz, 'dev'}
+
+functions:
+  XXXXX:
+    handler: XXXXX.yyyyyy
+    events:
+      - s3:
+          bucket: xxxxxxxxx-${self:provider.stage}-20200412
+          event: s3:ObjectCreated:*
