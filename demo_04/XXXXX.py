@@ -4,6 +4,7 @@ import boto3
 
 
 def yyyyyy(event, context):
+    # URLエンコーディングされているurlをデコードする。
     url = urllib.parse.unquote(event['body']).split('=')[1]
 
     # dynamoDBに書き込む
@@ -20,6 +21,8 @@ def yyyyyy(event, context):
             ':incr': 1
         }
     )
+
+    # dynamoDBから訪問数を取得する
     item = table.get_item(Key={'url': url})
     visitor = item['Item']['visitor']
 
