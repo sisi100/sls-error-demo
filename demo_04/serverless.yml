@@ -1,0 +1,60 @@
+service: demo-app-04
+
+# 変数
+custom:
+  # 左辺：変数名（好きな文字列で大丈夫です）
+  # 右辺：値
+  MyDynamoTable: yyyy-table-04 # 作成するDynamoテーブルの名前
+  AccountID: ${opt:account_id, 000000000000} # アカウント番号。自分のを入れてね！ "$ make deploy"の場合は自動で取得してます。
+
+provider:
+  name: aws
+  runtime: python3.7
+  endpointType: REGIONAL
+  region: ap-northeast-1
+
+  # Lamdaの権限（ロール）
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+      Resource: arn:aws:dynamodb:${self:provider.region}:${self:custom.AccountID}:table/${self:custom.MyDynamoTable}
+
+
+# デプロイのためにS3へ保存するファイル選択
+package:
+  exclude:
+    - ./** # 全て除外
+  include:
+    - ./XXXXX.py # このファイルだけ選択
+
+# Lamdaの定義
+functions:
+  XXXXX:
+    handler: XXXXX.yyyyyy
+    events:
+      - http:
+          path: counter
+          method: POST
+    
+
+# その他のリソース
+resources:
+  Resources:
+
+    # DynamoDBを作成
+    yyyyDynamo:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: url
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: url
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.MyDynamoTable}
