@@ -1,6 +1,6 @@
 function sent_msg() {
     $.ajax({
-        url:'https://5kkcbmfhp2.execute-api.ap-northeast-1.amazonaws.com/dev/counter',
+        url:'https://xxxxxxxxxx/dev/counter', // ←←← デプロイしたAPIのエンドポイントを入力してね！
         type:'POST',
         data:{
             'url':location.href,
