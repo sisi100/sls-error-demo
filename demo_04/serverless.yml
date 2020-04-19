@@ -32,8 +32,9 @@ package:
 functions:
   XXXXX:
     handler: XXXXX.yyyyyy
-    events:
-      - http:
+    
+    events: # Lambdaのトリガーの設定
+      - http: # API Gatewayのトリガーを設定
           path: counter
           method: POST
     
